@@ -2768,4 +2768,58 @@ class Component extends DCLogic {
 </script>
 
 
+<script id="__wa_fix">
+(function(){
+  var WA = '989121500651';
+  function openTab(url){
+    var a = document.createElement('a');
+    a.href = url; a.target = '_blank'; a.rel = 'noopener';
+    document.body.appendChild(a); a.click();
+    setTimeout(function(){ if (a.parentNode) a.parentNode.removeChild(a); }, 0);
+  }
+  function openWA(text){
+    openTab('https://wa.me/' + WA + '?text=' + encodeURIComponent(text));
+  }
+  function val(id){ var el = document.getElementById(id); return el ? (el.value || '').trim() : ''; }
+  var handlers = {
+    getPackage: function(){
+      openWA('سلام مربع سفید 👋 می‌خوام پکیج شروع رایگان رو داشته باشم 🎁');
+    },
+    floatWA: function(){
+      openWA('سلام مربع سفید 👋 کارت رو امروز تو مدرسه گرفتم، می‌خوام بیشتر بدونم.');
+    },
+    sendForm: function(){
+      var name = val('fName'), phone = val('fPhone'), school = val('fSchool');
+      if (!name || !phone){ alert('لطفاً اسم و شماره موبایل رو وارد کن'); return; }
+      var msg = 'سلام مربع سفید 👋\nاسم: ' + name + '\nشماره: ' + phone;
+      if (school) msg += '\nمدرسه: ' + school;
+      msg += '\nامروز کارت رو گرفتم و می‌خوام جلسه مشاوره رایگان رزرو کنم.';
+      openWA(msg);
+    },
+    saveContact: function(){
+      var vcard = ['BEGIN:VCARD','VERSION:3.0','FN:مربع سفید - حسام صالحی','ORG:آموزشگاه کنکور هنر مربع سفید','TEL;TYPE=CELL:+989109542020','TEL;TYPE=WORK:+989121500651','URL:https://instagram.com/hessam.sallehi','NOTE:آمادگی کنکور هنر - تهران','END:VCARD'].join('\n');
+      var blob = new Blob([vcard], { type:'text/vcard' });
+      var url = URL.createObjectURL(blob);
+      var a = document.createElement('a');
+      a.href = url; a.download = 'white-square.vcf';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function(){ URL.revokeObjectURL(url); }, 3000);
+    }
+  };
+  // Capture-phase delegation: runs before the (broken) inline {{ }} onclick,
+  // survives React re-renders because it lives on document, not the buttons.
+  document.addEventListener('click', function(e){
+    var t = e.target;
+    var el = t && t.closest ? t.closest('[onclick]') : null;
+    if (!el) return;
+    var m = (el.getAttribute('onclick') || '').match(/\{\{\s*(\w+)\s*\}\}/);
+    if (m && handlers[m[1]]){
+      e.preventDefault();
+      e.stopPropagation();
+      try { handlers[m[1]](); } catch(err){ console.error('[wa-fix]', err); }
+    }
+  }, true);
+})();
+</script>
+
 </body></html>
